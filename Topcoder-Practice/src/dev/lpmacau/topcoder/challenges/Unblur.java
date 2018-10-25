@@ -385,6 +385,78 @@ public class Unblur {
 		}
 		
 		
+		// Percorrer novamente, desta vez calculando a média do ponto
+		// Dividir por 9, verificar o mesmo para os pontos adjacentes
+		// Se for o valor com a média mais baixa, trocar por #
+
+		for(i=1; i<nLi; i++) {
+			double minAvg;
+			double avg = 0;
+			double a = 0;
+			
+			for(j=1; j<nCol; j++) {
+				
+				// Ignorar os 0's e #
+				try {
+					if(Integer.parseInt(resMatrix[i][j]) > 0) {
+						minAvg = 1000;	
+						avg = calculateAverage(possiMatrix,i,j);
+						
+						if((a = calculateAverage(possiMatrix,i,j+1))<minAvg) minAvg = a;
+						if((a = calculateAverage(possiMatrix,i,j-1))<minAvg) minAvg = a;
+						
+						if((a = calculateAverage(possiMatrix,i+1,j+1))<minAvg) minAvg = a;
+						if((a = calculateAverage(possiMatrix,i+1,j-1))<minAvg) minAvg = a;
+						if((a = calculateAverage(possiMatrix,i+1,j))<minAvg) minAvg = a;
+						
+						if((a = calculateAverage(possiMatrix,i-1,j))<minAvg) minAvg = a;
+						if((a = calculateAverage(possiMatrix,i-1,j+1))<minAvg) minAvg = a;
+						if((a = calculateAverage(possiMatrix,i-1,j-1))<minAvg) minAvg = a;
+						
+						if(avg==minAvg) 
+							resMatrix[i][j] = "#";
+						//else resMatrix[i][j] = "0";
+					}
+						 
+				} catch (Exception e) {
+					
+				}
+			}	
+		}
+		
+		
+
+		for(i=1; i<nLi; i++) {
+			for(j=1; j<nCol; j++) {
+				try {
+					
+					
+					if(resMatrix[i][j] != "#" && Integer.parseInt(resMatrix[i][j]) > 0)
+						if(Integer.parseInt(resMatrix[i][j]) - Integer.parseInt(resMatrix[i][j-1]) > 2
+							|| Integer.parseInt(resMatrix[i][j]) - Integer.parseInt(resMatrix[i][j+1]) > 2
+							|| Integer.parseInt(resMatrix[i][j]) - Integer.parseInt(resMatrix[i+1][j]) > 2
+							|| Integer.parseInt(resMatrix[i][j]) - Integer.parseInt(resMatrix[i-1][j]) > 2)
+								resMatrix[i][j] = "#";
+					
+
+
+//					if(Integer.parseInt(resMatrix[i][j]) == 3) {
+//						if(Integer.parseInt(resMatrix[i][j-1]) == 3 && Integer.parseInt(resMatrix[i][j+1]) == 3 )
+//							resMatrix[i][j] = "0";
+//					}
+				}
+				catch (Exception e) {
+					
+				}
+			}	
+		}
+		
+		// Preencher restantes obrigatorios
+		//  # 0 0
+		//  3 4 4
+		//  # # 4
+		
+		
 		System.out.println("MATRIX ORI");
 		for (i = 0; i < oriMatrix.length; i++) {
 			  for (j = 0; j < oriMatrix[i].length; j++) {
@@ -411,13 +483,13 @@ public class Unblur {
 			  System.out.println();	  
 		}
 		
-		
-		System.out.println("Matrix RES");
+		 
 		String[] matrixStringed = new String[nLi];
 		for (i = 0; i < resMatrix.length; i++) {
 			StringBuilder str = new StringBuilder();
 			  for (j = 0; j < resMatrix[i].length; j++) {
-				  if(resMatrix[i][j].chars().allMatch(Character::isDigit) && Integer.valueOf(resMatrix[i][j]) == 0) str.append('.');
+				  if(resMatrix[i][j].chars().allMatch(Character::isDigit))  str.append('.'); //  && Integer.valueOf(resMatrix[i][j]) == 0)
+				  //if(resMatrix[i][j].chars().allMatch(Character::isDigit)  && Integer.valueOf(resMatrix[i][j]) == 0)  str.append('.'); // 
 				  else str.append(resMatrix[i][j]);
 			  }
 			  matrixStringed[i] = str.toString();
@@ -428,4 +500,24 @@ public class Unblur {
 		
 		return matrixStringed;
 	}
+
+
+	private double calculateAverage(int[][] possiMatrix, int i, int j) {
+		// ignore if it is a 0
+		if(possiMatrix[i][j] == 0)
+			return 1000;
+		
+		double total = 0;
+		if(possiMatrix[i][j+1] > 0) total+= possiMatrix[i][j+1];
+		if(possiMatrix[i][j-1] > 0) total+= possiMatrix[i][j-1];
+		if(possiMatrix[i+1][j] > 0) total+= possiMatrix[i+1][j];
+		if(possiMatrix[i+1][j+1] > 0) total+= possiMatrix[i+1][j+1];
+		if(possiMatrix[i+1][j-1] > 0) total+= possiMatrix[i+1][j-1];
+		if(possiMatrix[i-1][j] > 0) total+= possiMatrix[i-1][j];
+		if(possiMatrix[i-1][j+1] > 0) total+= possiMatrix[i-1][j+1];
+		if(possiMatrix[i-1][j-1] > 0) total+= possiMatrix[i-1][j-1];
+	
+		return total/9;
+	}
+	
 }

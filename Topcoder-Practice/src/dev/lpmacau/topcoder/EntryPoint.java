@@ -3,7 +3,6 @@ import dev.lpmacau.topcoder.challenges.*;
 
 public class EntryPoint {
 	public static void main(String args[]) {
-		runUnblur();
 	}
 
 	private static void runHawaiian() {
@@ -51,11 +50,17 @@ public class EntryPoint {
 			"1221", "1221", "1221"
 		};
 		
+
+		
 		for(String s : u.original(a)) {
 			System.out.println(s);
 		}
 		
 	}
+	
+	
+
+	
 	
 }
 
