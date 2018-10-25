@@ -1,8 +1,11 @@
 package dev.lpmacau.topcoder;
+import java.util.Arrays;
+
 import dev.lpmacau.topcoder.challenges.*;
 
 public class EntryPoint {
 	public static void main(String args[]) {
+		runUnblur();
 	}
 
 	private static void runHawaiian() {
@@ -51,6 +54,8 @@ public class EntryPoint {
 		};
 		
 
+		
+		Arrays.stream(a).forEach(x -> System.out.println(x));
 		
 		for(String s : u.original(a)) {
 			System.out.println(s);

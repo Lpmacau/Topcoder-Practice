@@ -519,5 +519,4 @@ public class Unblur {
 	
 		return total/9;
 	}
-	
 }
