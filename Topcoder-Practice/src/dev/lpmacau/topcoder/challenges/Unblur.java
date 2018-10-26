@@ -1,6 +1,14 @@
 package dev.lpmacau.topcoder.challenges;
 
 public class Unblur {
+	
+	public String[] quase(String[] blurred) {
+		
+		return null;
+	}
+	
+	
+	
 	public String[] original(String[] blurred) {
 		int nLi = blurred.length;
 		int nCol = blurred[0].length();
